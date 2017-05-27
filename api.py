@@ -4,7 +4,6 @@ DISCOVERY_URI = "https://prod-s0-webapp-proxy.nubank.com.br/api/discovery"
 
 REQUEST_HEADERS = {
   "Content-Type": "application/json",
-  "X-Correlation-Id": "WEB-APP.jO4x1",
   "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
   "Origin": "https://conta.nubank.com.br",
   "Referer": "https://conta.nubank.com.br/",
@@ -43,8 +42,7 @@ def auth_required(func):
     return wrapper
 
 class NubankAPI(object):
-    _autologin = True
-    _linsk = None
+    _links = None
     _signin_info = None
 
     def login(self, login, password):
@@ -89,23 +87,6 @@ class NubankAPI(object):
 
     @auth_required
     @json_response
-    def purchases(self):
-        headers = {
-            "Authorization": "Bearer %s" % (self._signin_info["access_token"], ),
-        }
-
-        headers.update(REQUEST_HEADERS)
-        purchases = requests.get(self._links["purchases"], headers=headers)
-
-        return purchases
-
-    @auth_required
-    @json_response
-    def user_change_password(self):
-        pass #TODO
-
-    @auth_required
-    @json_response
     def events_page(self):
         headers = {
             "Authorization": "Bearer %s" % (self._signin_info["access_token"], ),
@@ -118,7 +99,7 @@ class NubankAPI(object):
 
     @auth_required
     @json_response
-    def revoke_token(self):
+    def logout(self):
         headers = {
             "Authorization": "Bearer %s" % (self._signin_info["access_token"], ),
         }
