@@ -172,7 +172,7 @@ class NubankAPI(object):
             "password": password,
             "grant_type": "password",
             "client_id": "other.conta",
-            "client_secret": "yQPeLzoHuJzlMMSAjC-LgNUJdUecx8XO",
+            "client_secret": "your_token",
         }
 
         self._links = self._discovery()
